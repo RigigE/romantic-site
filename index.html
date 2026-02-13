@@ -1,95 +1,210 @@
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Open Me ❤️</title>
+<title>For mckayla ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
 <style>
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background: linear-gradient(to bottom right, #ff9a9e, #fad0c4);
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+body{
+margin:0;
+height:100vh;
+overflow:hidden;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+font-family:'Segoe UI',sans-serif;
+background:linear-gradient(-45deg,#ff758c,#ff7eb3,#fad0c4,#ffd1ff);
+background-size:400% 400%;
+animation:gradient 12s ease infinite;
+color:white;
+text-align:center;
 }
 
-#envelope {
-    width: 200px;
-    height: 150px;
-    background: white;
-    position: relative;
-    cursor: pointer;
-    border-radius: 10px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+@keyframes gradient{
+0%{background-position:0% 50%}
+50%{background-position:100% 50%}
+100%{background-position:0% 50%}
 }
 
-#envelope:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    border-left: 100px solid transparent;
-    border-right: 100px solid transparent;
-    border-top: 75px solid #ff6f91;
-    border-radius: 10px 10px 0 0;
+/* Envelope */
+#envelope{
+width:220px;
+height:160px;
+background:white;
+border-radius:12px;
+box-shadow:0 15px 40px rgba(0,0,0,0.3);
+position:relative;
+animation:float 2s ease-in-out infinite alternate;
 }
 
-#message, #videoSection {
-    display: none;
-    margin-top: 20px;
+@keyframes float{
+from{transform:translateY(0)}
+to{transform:translateY(-15px)}
 }
 
-button {
-    padding: 10px 20px;
-    font-size: 18px;
-    background: #ff6f91;
-    border: none;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
+#envelope:before{
+content:'';
+position:absolute;
+top:0;
+left:0;
+border-left:110px solid transparent;
+border-right:110px solid transparent;
+border-top:80px solid #ff4f81;
+border-radius:12px 12px 0 0;
 }
 
-video {
-    width: 90%;
-    max-width: 400px;
-    margin-top: 15px;
-    border-radius: 10px;
+.hidden{display:none}
+
+input{
+padding:10px;
+border-radius:20px;
+border:none;
+margin-top:15px;
+text-align:center;
+}
+
+button{
+padding:10px 20px;
+margin-top:15px;
+border-radius:25px;
+border:none;
+background:white;
+color:#ff4f81;
+font-weight:bold;
+cursor:pointer;
+}
+
+button:hover{
+background:#ff4f81;
+color:white;
+}
+
+.cursive{
+font-family:'Great Vibes',cursive;
+font-size:50px;
+margin-bottom:10px;
+}
+
+#letter{
+width:80%;
+max-width:500px;
+min-height:100px;
+margin:auto;
+white-space:pre-line;
+}
+
+video{
+width:90%;
+max-width:420px;
+border-radius:15px;
+margin-top:20px;
+}
+
+#countdown{
+font-size:40px;
+margin-top:20px;
 }
 </style>
 </head>
+
 <body>
 
-<div id="envelope" onclick="openEnvelope()"></div>
-<h2>Open Me</h2>
+<!-- Envelope -->
+<div id="envelope"></div>
+<h2>Opening...</h2>
 
-<div id="message">
-    <h2>For You ❤️</h2>
-    <button onclick="playVideo()">Play</button>
+<!-- Password -->
+<div id="passwordSection" class="hidden">
+<h2>Enter Password ❤️</h2>
+<input type="password" id="passwordInput" placeholder="Enter password">
+<br>
+<button onclick="checkPassword()">Unlock</button>
+<p id="error" style="color:yellow;"></p>
 </div>
 
-<div id="videoSection">
-    <video id="romanticVideo" controls>
-        <source src="your-video.mp4" type="video/mp4">
-    </video>
+<!-- Letter Section -->
+<div id="letterSection" class="hidden">
+<div class="cursive">mckayla ❤️</div>
+<div id="letter"></div>
+<button onclick="startCountdown()">Reveal Surprise</button>
 </div>
+
+<!-- Countdown -->
+<div id="countdownSection" class="hidden">
+<div id="countdown">5</div>
+</div>
+
+<!-- Video -->
+<div id="videoSection" class="hidden">
+<video id="romanticVideo" controls playsinline>
+<source src="./your-video.mp4" type="video/mp4">
+</video>
+</div>
+
+<!-- Background Music -->
+<audio id="bgMusic" loop>
+<source src="./music.mp3" type="audio/mp3">
+</audio>
 
 <script>
-function openEnvelope() {
-    document.getElementById("envelope").style.display = "none";
-    document.querySelector("h2").style.display = "none";
-    document.getElementById("message").style.display = "block";
+
+/* Auto envelope opening */
+setTimeout(()=>{
+document.getElementById("envelope").classList.add("hidden");
+document.querySelector("h2").classList.add("hidden");
+document.getElementById("passwordSection").classList.remove("hidden");
+},2500);
+
+/* Password check */
+function checkPassword(){
+let pass=document.getElementById("passwordInput").value;
+if(pass==="cheroo"){
+document.getElementById("passwordSection").classList.add("hidden");
+document.getElementById("letterSection").classList.remove("hidden");
+typeLetter();
+document.getElementById("bgMusic").play();
+}else{
+document.getElementById("error").innerText="Wrong password ❤️";
+}
 }
 
-function playVideo() {
-    document.getElementById("message").style.display = "none";
-    document.getElementById("videoSection").style.display = "block";
-    document.getElementById("romanticVideo").play();
+/* Typewriter Letter */
+let text="I am glad you are part of my life.\nI will always care for you, love you, and protect you.\nYou mean more to me than words can explain. ❤️";
+let index=0;
+
+function typeLetter(){
+if(index<text.length){
+document.getElementById("letter").innerHTML+=text.charAt(index);
+index++;
+setTimeout(typeLetter,40);
 }
+}
+
+/* Countdown */
+function startCountdown(){
+document.getElementById("letterSection").classList.add("hidden");
+document.getElementById("countdownSection").classList.remove("hidden");
+
+let count=5;
+let interval=setInterval(()=>{
+count--;
+document.getElementById("countdown").innerText=count;
+if(count===0){
+clearInterval(interval);
+document.getElementById("countdownSection").classList.add("hidden");
+document.getElementById("videoSection").classList.remove("hidden");
+document.getElementById("bgMusic").pause();
+document.getElementById("romanticVideo").play();
+}
+},1000);
+}
+
 </script>
 
 </body>
-</html>
+    </html>
+    
