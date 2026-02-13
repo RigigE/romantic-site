@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Open Me ❤️</title>
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: linear-gradient(to bottom right, #ff9a9e, #fad0c4);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#envelope {
+    width: 200px;
+    height: 150px;
+    background: white;
+    position: relative;
+    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+#envelope:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-top: 75px solid #ff6f91;
+    border-radius: 10px 10px 0 0;
+}
+
+#message, #videoSection {
+    display: none;
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 18px;
+    background: #ff6f91;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+video {
+    width: 90%;
+    max-width: 400px;
+    margin-top: 15px;
+    border-radius: 10px;
+}
+</style>
+</head>
+<body>
+
+<div id="envelope" onclick="openEnvelope()"></div>
+<h2>Open Me</h2>
+
+<div id="message">
+    <h2>For You ❤️</h2>
+    <button onclick="playVideo()">Play</button>
+</div>
+
+<div id="videoSection">
+    <video id="romanticVideo" controls>
+        <source src="your-video.mp4" type="video/mp4">
+    </video>
+</div>
+
+<script>
+function openEnvelope() {
+    document.getElementById("envelope").style.display = "none";
+    document.querySelector("h2").style.display = "none";
+    document.getElementById("message").style.display = "block";
+}
+
+function playVideo() {
+    document.getElementById("message").style.display = "none";
+    document.getElementById("videoSection").style.display = "block";
+    document.getElementById("romanticVideo").play();
+}
+</script>
+
+</body>
+</html>
